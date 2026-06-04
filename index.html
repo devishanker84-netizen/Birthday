@@ -18,187 +18,181 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f7f3ed; 
+            /* Sunset beach gradient background inspired by your reference images */
+            background: linear-gradient(180deg, #fcdbb0 0%, #f7b083 40%, #e07b66 70%, #b85c6c 100%);
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            padding: 20px;
+            padding: 15px;
+            position: relative;
         }
 
+        /* Ambient glowing sunset sun effect behind the content */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255,243,212,0.6) 0%, rgba(255,255,255,0) 70%);
+            top: 15%;
+            z-index: 0;
+        }
+
+        /* Container card with a soft frosted-glass overlay to let the sunset show through */
         .poster-card {
             position: relative;
+            z-index: 1;
             width: 100%;
-            max-width: 750px;
-            background: #ffffff; 
+            max-width: 500px; /* Kept compact so it frames beautifully on a mobile screen */
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(179, 137, 59, 0.1); 
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            padding: 40px;
-            gap: 30px;
-            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
             align-items: center;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* Decorative stars */
-        .poster-card::before {
-            content: '✨';
-            position: absolute;
-            top: 25px;
-            left: 30px;
-            font-size: 20px;
-            opacity: 0.4;
+        /* Image styling matching the full-body template look */
+        .image-column {
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
+        .image-container {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            background: #fff;
+            padding: 6px; /* White border frame feel */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        /* Typography & Wishes matching the color scheme of your pictures */
         .wishes-column {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            color: #4a3e3d; 
+            align-items: center;
+            width: 100%;
         }
 
         .main-heading {
             font-family: 'Great Vibes', cursive;
-            font-size: 4.5rem;
-            color: #b3893b; 
+            font-size: 4rem;
+            color: #9e1b6b; /* Magenta/Burgundy tone from image_4f30de.jpg */
             line-height: 1;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
         }
 
         .sub-heading {
             font-size: 2.2rem;
             font-weight: 600;
-            color: #9e1b6b; 
-            letter-spacing: 1px;
-            margin-bottom: 25px;
+            color: #b3893b; /* Luxury gold color from text headings */
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
         }
 
         .stanza-text {
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
+            line-height: 1.65;
             font-weight: 400;
-            color: #615553;
-            margin-bottom: 30px;
-            border-left: 3px solid #9e1b6b;
-            padding-left: 15px;
+            color: #4a3e3d;
+            margin-bottom: 20px;
+            padding: 0 5px;
         }
 
         .divider {
-            width: 60px;
-            height: 2px;
-            background: #b3893b;
-            margin-bottom: 20px;
+            width: 80px;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, #b3893b, transparent);
+            margin-bottom: 15px;
         }
 
         .fixed-closing {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.5rem;
-            color: #b3893b;
+            font-size: 2.4rem;
+            color: #9e1b6b;
         }
 
-        .image-column {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
+        /* CSS Floating Confetti Effect elements */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 14px;
+            background: #ffd700;
+            opacity: 0.7;
+            border-radius: 2px;
+            z-index: 0;
+            animation: fall 6s linear infinite;
+        }
+        
+        .c1 { left: 10%; animation-delay: 0s; transform: rotate(15deg); background: #fca1b0; }
+        .c2 { left: 25%; animation-delay: 2s; transform: rotate(45deg); background: #ffd700; }
+        .c3 { left: 75%; animation-delay: 1s; transform: rotate(-30deg); background: #e6cb95; }
+        .c4 { left: 88%; animation-delay: 3.5s; transform: rotate(20deg); background: #fca1b0; }
+
+        @keyframes fall {
+            0% { top: -20px; transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { top: 100vh; transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Elegant soft-gold background frame for the image */
-        .image-crop-box {
-            width: 100%;
-            height: 520px; 
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center; 
-            border-radius: 16px;
-            background: linear-gradient(135deg, #fbf7f0, #e6cb95);
-            padding: 12px; /* Acts as a luxury border frame */
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.6), 0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .image-crop-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        /* 📱 PERFECT VERTICAL PHONE OPTIMIZATION */
-        @media (max-width: 650px) {
-            body {
-                padding: 15px;
-            }
-
-            .poster-card {
-                grid-template-columns: 1fr; /* Stacks vertically */
-                padding: 25px;
-                gap: 25px;
-            }
-
-            /* Moves image to the very top on phones so she sees her face first! */
-            .image-column {
-                grid-row: 1; 
-            }
-
-            .wishes-column {
-                grid-row: 2;
-                text-align: center; /* Centers the text perfectly on mobile devices */
-            }
-
-            .image-crop-box {
-                height: 380px; /* Perfect height for vertical mobile viewports */
-                padding: 8px;
-            }
-
-            .stanza-text {
-                border-left: none;
-                border-top: 1px dashed #9e1b6b;
-                border-bottom: 1px dashed #9e1b6b;
-                padding: 15px 5px;
-                font-size: 0.95rem;
-            }
-
-            .divider {
-                margin: 0 auto 20px auto; /* Centers the decorative line */
-            }
-
-            .main-heading {
-                font-size: 3.8rem;
-            }
-            
-            .sub-heading {
-                font-size: 1.8rem;
-                margin-bottom: 15px;
-            }
+        /* Optimization for very narrow vertical phone devices */
+        @media (max-width: 380px) {
+            .main-heading { font-size: 3.3rem; }
+            .sub-heading { font-size: 1.8rem; }
+            .poster-card { padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Floating Confetti Background Pieces -->
+    <div class="confetti c1"></div>
+    <div class="confetti c2"></div>
+    <div class="confetti c3"></div>
+    <div class="confetti c4"></div>
+
     <div class="poster-card">
         
-        <!-- text content column -->
+        <!-- Image positioned at the top for mobile layout screens -->
+        <div class="image-column">
+            <div class="image-container">
+                <img src="photo.png.png" alt="Kavishkaa Photo">
+            </div>
+        </div>
+        
+        <!-- Elegant typography section -->
         <div class="wishes-column">
-            <h1 class="main-heading">Happy 18th</h1>
-            <h2 class="sub-heading">Birthday Kavishkaa</h2>
+            <h1 class="main-heading">Happy Birthday</h1>
+            <h2 class="sub-heading">Kavishkaa</h2>
             
             <p class="stanza-text">
-                Wishing you a truly magical day surrounded by the love and joy you so deeply deserve. 
+                Wishing you a truly magical day, with the love and joy you so deeply deserve. 
                 As you step into adulthood, may every chapter you write be more beautiful than the last, 
-                filled with good health, wonderful friendships, and memories that you will cherish forever. 
-                May all the blessings of the universe find their way to you in this special milestone year.
+                filled of cherished memories and blessings blessings.
             </p>
             
             <div class="divider"></div>
             
             <p class="fixed-closing">Shine bright, always! ♡</p>
-        </div>
-
-        <!-- image container with new custom background -->
-        <div class="image-column">
-            <div class="image-crop-box">
-                <img src="photo.png.png" alt="Kavishkaa Photo">
-            </div>
         </div>
 
     </div>
