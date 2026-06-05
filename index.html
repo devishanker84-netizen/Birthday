@@ -26,7 +26,6 @@ body{
     pointer-events:none;
 }
 
-/* FLOATERS */
 .dot{
     position:absolute;
     width:4px;
@@ -139,12 +138,6 @@ button{
     opacity:0;
     font-weight:bold;
     color:#4A2E50;
-    animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
 }
 
 /* NOTE */
@@ -158,10 +151,16 @@ button{
     height:100dvh;
 }
 
-h1{
+/* ⭐ BIG TITLE FIX */
+.bigTitle{
     text-align:center;
-    color:#5a2c6b;
-    font-size:20px;
+    font-size:38px;
+    font-weight:900;
+    color:#4A2E50;
+    font-family: 'Georgia', serif;
+    letter-spacing:2px;
+    margin-bottom:10px;
+    text-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
 .noteBox{
@@ -198,12 +197,6 @@ h1{
     color:#4A2E50;
     letter-spacing:2px;
 }
-
-/* SAFE AREA FIX (iPhones) */
-.screen, #note, #main, #countdown {
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-top: env(safe-area-inset-top);
-}
 </style>
 </head>
 
@@ -237,16 +230,17 @@ h1{
 <!-- NOTE -->
 <div id="note">
 
-    <h1>Happy 18th Birthday</h1>
+    <div class="bigTitle">Happy 18th Birthday</div>
 
     <div class="noteBox">
 
-        <p class="highlight">Happy 18th Birthday, Kavishkaa 🤍🎉</p>
+          <p class="highlight">Happy 18th Birthday, Kavishkaa 🤍🎉</p>
 
         <p>Hope today feels really special for you in everyway.</p>
         <p>Wishing you happiness, good health, success and all the good things in life. Hope this year brings you more smiles, peace, and good moments.</p>
         <p>And yeah... I really want to say Thank you for being part of my life and for all the memories. It means more to me than i usually show or say.I really value all those moments, and I'll always be glad that you were part of it.</p><p>I just hope your day feels calm, happy, and filled with good moments from start to end.</p>
         <p>Enjoy your day.Keep shining always ✨</p>
+
 
         <div class="sign">
             <div class="love">WITH LOVE</div>
@@ -258,10 +252,10 @@ h1{
 
 <script>
 
-/* BG FLOATERS */
+/* BG */
 const bg=document.getElementById("bg");
 
-for(let i=0;i<35;i++){
+for(let i=0;i<40;i++){
     let d=document.createElement("div");
     d.className="dot";
     d.style.left=Math.random()*100+"vw";
@@ -270,7 +264,7 @@ for(let i=0;i<35;i++){
     bg.appendChild(d);
 }
 
-/* INPUT FIX */
+/* INPUT */
 const code=document.getElementById("code");
 
 code.addEventListener("input",()=>{
@@ -309,6 +303,7 @@ function start(){
         if(i>=steps.length){
             screen.style.display="none";
             document.getElementById("main").style.display="flex";
+
             poppersBlast();
             tap();
             return;
@@ -324,7 +319,7 @@ function start(){
     run();
 }
 
-/* POPPERS */
+/* 💥 BIG POPPERS */
 function poppersBlast(){
 
     const layer=document.createElement("div");
@@ -334,15 +329,18 @@ function poppersBlast(){
     layer.style.zIndex="9999";
     document.body.appendChild(layer);
 
-    const colors=["#fff","#ffd6ff","#caffbf","#a0c4ff","#ffe66d","#ff4d6d","#bdb2ff"];
+    const colors=[
+        "#ffb3c1","#ffd6a5","#fdffb6",
+        "#caffbf","#a0c4ff","#bdb2ff","#ffffff"
+    ];
 
     const x=window.innerWidth/2;
     const y=window.innerHeight/3;
 
-    for(let i=0;i<180;i++){
+    for(let i=0;i<350;i++){
 
         const p=document.createElement("div");
-        const size=Math.random()*6+3;
+        const size=Math.random()*6+2;
 
         p.style.position="absolute";
         p.style.width=size+"px";
@@ -351,25 +349,26 @@ function poppersBlast(){
         p.style.background=colors[Math.floor(Math.random()*colors.length)];
         p.style.left=x+"px";
         p.style.top=y+"px";
+        p.style.boxShadow="0 0 10px rgba(255,255,255,0.8)";
 
         layer.appendChild(p);
 
         const angle=Math.random()*Math.PI*2;
-        const distance=Math.random()*500;
+        const distance=Math.random()*700;
 
         const dx=Math.cos(angle)*distance;
         const dy=Math.sin(angle)*distance;
 
         setTimeout(()=>{
-            p.style.transition="1.3s ease-out";
+            p.style.transition="1.5s ease-out";
             p.style.transform=`translate(${dx}px,${dy}px) scale(0)`;
             p.style.opacity="0";
         },10);
 
-        setTimeout(()=>p.remove(),1500);
+        setTimeout(()=>p.remove(),1600);
     }
 
-    setTimeout(()=>layer.remove(),1600);
+    setTimeout(()=>layer.remove(),1700);
 }
 
 /* TAP */
