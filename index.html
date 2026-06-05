@@ -6,13 +6,12 @@
 <title>✧ A Private Capsule...</title>
 
 <style>
-
 :root {
     --bg-main: #D1C7D7;
     --text-dark: #35223A;
     --btn-eggplant: #4A2E50;
-    --panel-bg: rgba(255,255,255,0.45);
-    --panel-border: rgba(53,34,58,0.15);
+    --panel-bg: rgba(255, 255, 255, 0.45);
+    --panel-border: rgba(53, 34, 58, 0.15);
 }
 
 /* RESET */
@@ -29,7 +28,6 @@ body {
     overflow-x: hidden;
 }
 
-/* SCREEN */
 .screen {
     min-height: 100vh;
     display: flex;
@@ -49,16 +47,14 @@ body {
     overflow: hidden;
 }
 
-/* IMAGE */
 .gatekeeper-picture {
     flex: 1;
     min-height: 300px;
-    background-image: url('IMG-20260605-WA0075.jpg');
+    background-image: url('bday-pic1.jpg'); /* Use your main saree pic here */
     background-size: cover;
     background-position: center;
 }
 
-/* CARD */
 .luxury-card {
     flex: 1;
     padding: 28px;
@@ -68,11 +64,11 @@ body {
     text-align: center;
 }
 
-/* TEXT */
 .gatekeeper-title {
     font-size: 12px;
     letter-spacing: 3px;
     color: var(--text-dark);
+    font-weight: bold;
 }
 
 .gatekeeper-subtitle {
@@ -81,7 +77,6 @@ body {
     opacity: 0.7;
 }
 
-/* INPUT */
 .passcode-input {
     margin-top: 18px;
     padding: 14px;
@@ -90,9 +85,9 @@ body {
     letter-spacing: 6px;
     border-radius: 12px;
     border: 1px solid var(--panel-border);
+    text-transform: uppercase;
 }
 
-/* BUTTON */
 .unlock-btn {
     margin-top: 12px;
     padding: 14px;
@@ -101,6 +96,7 @@ body {
     border: none;
     border-radius: 12px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 /* ================= COUNTDOWN ================= */
@@ -112,6 +108,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
 .count-number {
@@ -127,34 +124,118 @@ body {
     padding: 0 20px;
 }
 
-/* ================= MAIN ================= */
-.main-content {
+/* ================= MAIN CONTAINER ================= */
+.main-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
     width: 100%;
-    max-width: 700px;
+    max-width: 450px; /* Constraints layout to elegant portrait proportion */
+    margin: 0 auto;
 }
 
+/* ================= AESTHETIC POSTER ================= */
+.poster-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Perfect Instagram Portrait Ratio */
+    background: #eedfcc;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* B&W Background Grid Gallery */
+.poster-bg-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%) contrast(95%) brightness(90%);
+    opacity: 0.75;
+}
+
+.grid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Elegant "18" Watermark in Background */
+.bg-number-overlay {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    font-size: 110px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Georgia', serif;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* Main Highlight Center Image (In Full Color) */
+.poster-center-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 65%;
+    background: white;
+    padding: 8px; /* Creates the crisp white cutout border */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    border-radius: 4px;
+}
+
+.center-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Typography Text Overlays */
+.poster-title {
+    position: absolute;
+    bottom: 6%;
+    width: 100%;
+    text-align: center;
+    font-family: 'Georgia', serif;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
+}
+
+/* ================= MESSAGE NOTE ================= */
 .message-section {
     background: var(--panel-bg);
     border: 1px solid var(--panel-border);
     border-radius: 18px;
-    padding: 18px;
-    max-height: 75vh;
-    overflow-y: auto;
+    padding: 24px;
+    width: 100%;
     line-height: 1.8;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
-/* TEXT */
 .message-section p {
     margin-bottom: 14px;
     color: var(--text-dark);
     font-size: 15px;
 }
 
-/* SCROLL */
+.message-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* SCROLLBAR */
 .message-section::-webkit-scrollbar {
     width: 5px;
 }
-
 .message-section::-webkit-scrollbar-thumb {
     background: var(--btn-eggplant);
     border-radius: 10px;
@@ -162,95 +243,82 @@ body {
 
 /* ================= MOBILE FIX ================= */
 @media (max-width: 768px) {
-
     .gatekeeper-wrapper {
         flex-direction: column;
         border-radius: 16px;
     }
-
     .gatekeeper-picture {
-        min-height: 220px;
+        min-height: 240px;
     }
-
     .luxury-card {
         padding: 20px;
     }
-
     .count-number {
         font-size: 64px;
     }
-
-    .message-section {
-        max-height: 70vh;
-        padding: 16px;
+    .poster-title {
+        font-size: 20px;
     }
-
-    .message-section p {
-        font-size: 14px;
+    .bg-number-overlay {
+        font-size: 90px;
     }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- GATEKEEPER -->
 <div class="screen" id="lockRoom">
-
-<div class="gatekeeper-wrapper">
-
-    <div class="gatekeeper-picture"></div>
-
-    <div class="luxury-card">
-
-        <div class="gatekeeper-title">VERIFICATION REQUIRED</div>
-
-        <div class="gatekeeper-subtitle">
-            Don't expect much… just something small from me.
+    <div class="gatekeeper-wrapper">
+        <div class="gatekeeper-picture"></div>
+        <div class="luxury-card">
+            <div class="gatekeeper-title">VERIFICATION REQUIRED</div>
+            <div class="gatekeeper-subtitle">Don't expect much… just something small from me.</div>
+            <input type="text" id="passcodeInput" class="passcode-input" placeholder="XXXX">
+            <button class="unlock-btn" onclick="verifyKey()">UNLOCK</button>
         </div>
-
-        <input type="text" id="passcodeInput" class="passcode-input">
-
-        <button class="unlock-btn" onclick="verifyKey()">UNLOCK</button>
-
     </div>
-
 </div>
 
-</div>
-
-<!-- COUNTDOWN -->
 <div class="countdown-overlay" id="countdownScreen">
-
     <div class="count-number" id="countNumber">3</div>
     <div class="count-text" id="countText"></div>
-
 </div>
 
-<!-- MAIN -->
 <div class="screen" id="mainContentRoom" style="display:none;">
+    <div class="main-content-wrapper">
+        
+        <div class="poster-container">
+            <div class="poster-bg-grid">
+                <img src="bday-pic3.jpg" class="grid-img" alt="Memory 1">
+                <img src="bday-pic4.jpg" class="grid-img" alt="Memory 2">
+                <img src="bday-pic2.jpg" class="grid-img" alt="Memory 3">
+                <img src="bday-pic3.jpg" class="grid-img" alt="Memory 4">
+            </div>
 
-<div class="main-content">
+            <div class="bg-number-overlay">18</div>
 
-<div class="message-section">
+            <div class="poster-center-frame">
+                <img src="bday-pic1.jpg" class="center-img" alt="Birthday Girl">
+            </div>
 
-<p>Happy 18th Birthday, bestie 🤍🎉</p>
-<p>Hope today feels really special for you in every way.</p>
-<p>Wishing you lots of happiness, good health, success, and all the good things in life. Hope this year brings you more smiles, peace, and good moments.</p>
-<p>And yeah… I really want to say thank you. Thank you for being part of my life and for all the memories. It means more to me than I usually show or say. I really value all those moments, and I’ll always be glad that you were part of them.</p>
-<p>I just hope your day feels calm, happy, and filled with good moments from start to end.</p>
-<p>Enjoy your day properly. Keep shining always ✨</p>
-<p><b>With lots of love 🤍</b></p>
+            <div class="poster-title">Happy Birthday ✨</div>
+        </div>
 
-</div>
+        <div class="message-section">
+            <p>Happy 18th Birthday, bestie 🤍🎉</p>
+            <p>Hope today feels really special for you in every way.</p>
+            <p>Wishing you lots of happiness, good health, success, and all the good things in life. Hope this year brings you more smiles, peace, and good moments.</p>
+            <p>And yeah… I really want to say thank you. Thank you for being part of my life and for all the memories. It means more to me than I usually show or say. I really value all those moments, and I’ll always be glad that you were part of them.</p>
+            <p>I just hope your day feels calm, happy, and filled with good moments from start to end.</p>
+            <p>Enjoy your day properly. Keep shining always ✨</p>
+            <p><b>With lots of love 🤍</b></p>
+        </div>
 
-</div>
-
+    </div>
 </div>
 
 <script>
-
 const input = document.getElementById("passcodeInput");
 
 input.addEventListener("input", () => {
@@ -267,7 +335,6 @@ function verifyKey() {
 }
 
 function startCountdown() {
-
     const screen = document.getElementById("countdownScreen");
     const num = document.getElementById("countNumber");
     const text = document.getElementById("countText");
@@ -279,7 +346,6 @@ function startCountdown() {
     };
 
     screen.style.display = "flex";
-
     let count = 3;
 
     function run() {
@@ -293,17 +359,9 @@ function startCountdown() {
             document.getElementById("mainContentRoom").style.display = "flex";
         }
     }
-
     run();
 }
-
 </script>
 
 </body>
 </html>
-
-
-
-    
-    
-                
