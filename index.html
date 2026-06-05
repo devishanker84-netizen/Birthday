@@ -10,6 +10,7 @@
     --bg-main: #D1C7D7;
     --text-dark: #35223A;
     --btn-eggplant: #4A2E50;
+    --btn-hover: #5A3A61;
     --panel-bg: rgba(255, 255, 255, 0.45);
     --panel-border: rgba(53, 34, 58, 0.15);
 }
@@ -26,6 +27,18 @@ body {
     background: var(--bg-main);
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
+}
+
+/* BACKGROUND PARTICLES */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
 }
 
 .screen {
@@ -33,30 +46,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 24px 16px;
+    position: relative;
+    z-index: 1;
 }
 
 /* ================= GATEKEEPER ================= */
 .gatekeeper-wrapper {
     width: 100%;
-    max-width: 720px;
-    display: flex;
+    max-width: 420px; /* Refined width for an elegant, centered portrait card */
     background: var(--panel-bg);
     border: 1px solid var(--panel-border);
     border-radius: 20px;
     overflow: hidden;
-}
-
-.gatekeeper-picture {
-    flex: 1;
-    min-height: 300px;
-    background-image: url('Untitled Project.jpg'); 
-    background-position: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(53, 34, 58, 0.1);
 }
 
 .luxury-card {
-    flex: 1;
-    padding: 28px;
+    width: 100%;
+    padding: 40px 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,13 +81,15 @@ body {
 }
 
 .gatekeeper-subtitle {
-    font-size: 12px;
-    margin-top: 8px;
+    font-size: 13px;
+    margin-top: 10px;
     opacity: 0.7;
+    color: var(--text-dark);
+    line-height: 1.4;
 }
 
 .passcode-input {
-    margin-top: 18px;
+    margin-top: 24px;
     padding: 14px;
     font-size: 18px;
     text-align: center;
@@ -85,10 +97,20 @@ body {
     border-radius: 12px;
     border: 1px solid var(--panel-border);
     text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.passcode-input:focus {
+    border-color: var(--btn-eggplant);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(74, 46, 80, 0.1);
 }
 
 .unlock-btn {
-    margin-top: 12px;
+    margin-top: 14px;
     padding: 14px;
     background: var(--btn-eggplant);
     color: white;
@@ -96,6 +118,17 @@ body {
     border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.unlock-btn:hover {
+    background: var(--btn-hover);
+    transform: translateY(-1px);
+}
+
+.unlock-btn:active {
+    transform: translateY(1px);
 }
 
 /* ================= COUNTDOWN ================= */
@@ -113,14 +146,17 @@ body {
 .count-number {
     font-size: 80px;
     color: var(--text-dark);
+    font-weight: 700;
+    font-family: 'Georgia', serif;
 }
 
 .count-text {
-    margin-top: 12px;
-    font-size: 14px;
+    margin-top: 16px;
+    font-size: 15px;
     opacity: 0.8;
     text-align: center;
     padding: 0 20px;
+    color: var(--text-dark);
 }
 
 /* ================= MAIN CONTAINER ================= */
@@ -130,19 +166,25 @@ body {
     align-items: center;
     gap: 24px;
     width: 100%;
-    max-width: 450px; /* Constraints layout to elegant portrait proportion */
+    max-width: 450px; 
     margin: 0 auto;
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ================= AESTHETIC POSTER ================= */
 .poster-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5; /* Perfect Instagram Portrait Ratio */
+    aspect-ratio: 4 / 5; 
     background: #eedfcc;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.18);
 }
 
 /* B&W Background Grid Gallery */
@@ -165,11 +207,11 @@ body {
 /* Elegant "18" Watermark in Background */
 .bg-number-overlay {
     position: absolute;
-    top: 15%;
+    top: 12%;
     left: 10%;
     font-size: 110px;
     font-weight: 900;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.45);
     font-family: 'Georgia', serif;
     pointer-events: none;
     line-height: 1;
@@ -181,11 +223,11 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: 62%;
     height: 65%;
     background: white;
-    padding: 8px; /* Creates the crisp white cutout border */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    padding: 8px; 
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     border-radius: 4px;
 }
 
@@ -202,11 +244,11 @@ body {
     width: 100%;
     text-align: center;
     font-family: 'Georgia', serif;
-    font-size: 24px;
+    font-size: 26px;
     font-style: italic;
     font-weight: bold;
     color: #fff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
     letter-spacing: 1px;
 }
 
@@ -215,14 +257,16 @@ body {
     background: var(--panel-bg);
     border: 1px solid var(--panel-border);
     border-radius: 18px;
-    padding: 24px;
+    padding: 28px;
     width: 100%;
     line-height: 1.8;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(53, 34, 58, 0.05);
 }
 
 .message-section p {
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     color: var(--text-dark);
     font-size: 15px;
 }
@@ -231,32 +275,16 @@ body {
     margin-bottom: 0;
 }
 
-/* SCROLLBAR */
-.message-section::-webkit-scrollbar {
-    width: 5px;
-}
-.message-section::-webkit-scrollbar-thumb {
-    background: var(--btn-eggplant);
-    border-radius: 10px;
-}
-
 /* ================= MOBILE FIX ================= */
 @media (max-width: 768px) {
-    .gatekeeper-wrapper {
-        flex-direction: column;
-        border-radius: 16px;
-    }
-    .gatekeeper-picture {
-        min-height: 240px;
-    }
     .luxury-card {
-        padding: 20px;
+        padding: 32px 24px;
     }
     .count-number {
         font-size: 64px;
     }
     .poster-title {
-        font-size: 20px;
+        font-size: 22px;
     }
     .bg-number-overlay {
         font-size: 90px;
@@ -267,13 +295,14 @@ body {
 
 <body>
 
+<canvas id="bg-canvas"></canvas>
+
 <div class="screen" id="lockRoom">
     <div class="gatekeeper-wrapper">
-        <div class="gatekeeper-picture"></div>
         <div class="luxury-card">
             <div class="gatekeeper-title">VERIFICATION REQUIRED</div>
             <div class="gatekeeper-subtitle">Don't expect much… just something small from me.</div>
-            <input type="text" id="passcodeInput" class="passcode-input" placeholder="XXXX">
+            <input type="text" id="passcodeInput" class="passcode-input" placeholder="XXXX" maxlength="6">
             <button class="unlock-btn" onclick="verifyKey()">UNLOCK</button>
         </div>
     </div>
@@ -318,10 +347,69 @@ body {
 </div>
 
 <script>
+// --- CANVAS BACKGROUND ANIMATION ---
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.speedY = Math.random() * -0.4 - 0.1; 
+        this.opacity = Math.random() * 0.5 + 0.2;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y < 0) {
+            this.y = height;
+            this.x = Math.random() * width;
+        }
+        if (this.x < 0 || this.x > width) {
+            this.speedX *= -1;
+        }
+    }
+    draw() {
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+const particles = Array.from({ length: 40 }, () => new Particle());
+
+function animate() {
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+
+// --- LOGIC AND INTERACTION ---
 const input = document.getElementById("passcodeInput");
 
 input.addEventListener("input", () => {
     input.value = input.value.toUpperCase().replace(/\s/g, "");
+});
+
+input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        verifyKey();
+    }
 });
 
 function verifyKey() {
@@ -330,6 +418,10 @@ function verifyKey() {
         startCountdown();
     } else {
         input.value = "";
+        input.placeholder = "WRONG CODE";
+        setTimeout(() => { 
+            input.placeholder = "XXXX"; 
+        }, 1500);
     }
 }
 
@@ -356,6 +448,7 @@ function startCountdown() {
         } else {
             screen.style.display = "none";
             document.getElementById("mainContentRoom").style.display = "flex";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
     run();
