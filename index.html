@@ -3,456 +3,372 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✧ A Private Capsule...</title>
+<title>Birthday Capsule</title>
 
 <style>
-:root {
-    --bg-main: #D1C7D7;
-    --text-dark: #35223A;
-    --btn-eggplant: #4A2E50;
-    --btn-hover: #5A3A61;
-    --panel-bg: rgba(255, 255, 255, 0.45);
-    --panel-border: rgba(53, 34, 58, 0.15);
+body{
+    margin:0;
+    font-family: Arial;
+    background:#d1c7d7;
+    overflow:hidden;
 }
 
-/* RESET */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+/* BACKGROUND FLOATERS */
+#bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
 }
 
-body {
-    background: var(--bg-main);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
+.dot{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:rgba(255,255,255,0.5);
+    border-radius:50%;
+    animation: floatUp linear infinite;
 }
 
-/* BACKGROUND PARTICLES */
-#bg-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
+@keyframes floatUp{
+    from{transform:translateY(0);}
+    to{transform:translateY(-120vh); opacity:0;}
 }
 
-.screen {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px 16px;
-    position: relative;
-    z-index: 1;
+/* SCREEN */
+.screen{
+    position:relative;
+    z-index:2;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:16px;
 }
 
-/* ================= GATEKEEPER ================= */
-.gatekeeper-wrapper {
-    width: 100%;
-    max-width: 420px; /* Refined width for an elegant, centered portrait card */
-    background: var(--panel-bg);
-    border: 1px solid var(--panel-border);
-    border-radius: 20px;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 15px 35px rgba(53, 34, 58, 0.1);
+/* LOCK */
+.box{
+    width:90%;
+    max-width:400px;
+    background:rgba(255,255,255,0.4);
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
 }
 
-.luxury-card {
-    width: 100%;
-    padding: 40px 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+input{
+    width:100%;
+    padding:14px;
+    font-size:18px;
+    text-align:center;
+    letter-spacing:5px;
+    text-transform:uppercase;
 }
 
-.gatekeeper-title {
-    font-size: 12px;
-    letter-spacing: 3px;
-    color: var(--text-dark);
-    font-weight: bold;
+button{
+    margin-top:10px;
+    width:100%;
+    padding:14px;
+    background:#4A2E50;
+    color:white;
+    border:none;
+    border-radius:10px;
 }
 
-.gatekeeper-subtitle {
-    font-size: 13px;
-    margin-top: 10px;
-    opacity: 0.7;
-    color: var(--text-dark);
-    line-height: 1.4;
+/* COUNTDOWN */
+#countdown{
+    position:fixed;
+    inset:0;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#d1c7d7;
+    z-index:5;
 }
 
-.passcode-input {
-    margin-top: 24px;
-    padding: 14px;
-    font-size: 18px;
-    text-align: center;
-    letter-spacing: 6px;
-    border-radius: 12px;
-    border: 1px solid var(--panel-border);
-    text-transform: uppercase;
-    background: rgba(255, 255, 255, 0.6);
-    color: var(--text-dark);
-    outline: none;
-    transition: all 0.3s ease;
+#num{
+    font-size:70px;
+    color:#4A2E50;
 }
 
-.passcode-input:focus {
-    border-color: var(--btn-eggplant);
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 10px rgba(74, 46, 80, 0.1);
+#txt{
+    margin-top:10px;
+    font-size:14px;
+    text-align:center;
 }
 
-.unlock-btn {
-    margin-top: 14px;
-    padding: 14px;
-    background: var(--btn-eggplant);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: all 0.2s ease;
+/* MAIN */
+#main{
+    display:none;
+    height:100vh;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
 }
 
-.unlock-btn:hover {
-    background: var(--btn-hover);
-    transform: translateY(-1px);
+.poster{
+    width:85%;
+    max-width:350px;
+    height:420px;
+    border-radius:15px;
+    overflow:hidden;
 }
 
-.unlock-btn:active {
-    transform: translateY(1px);
+.poster img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-/* ================= COUNTDOWN ================= */
-.countdown-overlay {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-main);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
+#tap{
+    opacity:0;
+    font-weight:bold;
+    color:#4A2E50;
 }
 
-.count-number {
-    font-size: 80px;
-    color: var(--text-dark);
-    font-weight: 700;
-    font-family: 'Georgia', serif;
+/* NOTE SCREEN */
+#note{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#d1c7d7;
+    flex-direction:column;
+    padding:15px;
 }
 
-.count-text {
-    margin-top: 16px;
-    font-size: 15px;
-    opacity: 0.8;
-    text-align: center;
-    padding: 0 20px;
-    color: var(--text-dark);
+/* TITLE */
+h1{
+    text-align:center;
+    color:#5a2c6b;
 }
 
-/* ================= MAIN CONTAINER ================= */
-.main-content-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    width: 100%;
-    max-width: 450px; 
-    margin: 0 auto;
-    animation: fadeIn 1s ease forwards;
+/* SCROLL AREA */
+.noteBox{
+    flex:1;
+    overflow-y:auto;
+    background:rgba(255,255,255,0.4);
+    padding:15px;
+    border-radius:12px;
+    line-height:1.7;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+/* HIGHLIGHT */
+.highlight{
+    font-size:20px;
+    font-weight:700;
+    text-align:center;
+    color:#4A2E50;
+    background:rgba(255,255,255,0.6);
+    padding:12px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
 
-/* ================= AESTHETIC POSTER ================= */
-.poster-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 5; 
-    background: #eedfcc;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+/* FINAL SIGN */
+.sign{
+    margin-top:50px;
+    text-align:center;
+    padding-bottom:20px;
 }
 
-/* B&W Background Grid Gallery */
-.poster-bg-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    width: 100%;
-    height: 100%;
-    filter: grayscale(100%) contrast(95%) brightness(90%);
-    opacity: 0.75;
-}
-
-.grid-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Elegant "18" Watermark in Background */
-.bg-number-overlay {
-    position: absolute;
-    top: 12%;
-    left: 10%;
-    font-size: 110px;
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.45);
-    font-family: 'Georgia', serif;
-    pointer-events: none;
-    line-height: 1;
-}
-
-/* Main Highlight Center Image (In Full Color) */
-.poster-center-frame {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 62%;
-    height: 65%;
-    background: white;
-    padding: 8px; 
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    border-radius: 4px;
-}
-
-.center-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Typography Text Overlays */
-.poster-title {
-    position: absolute;
-    bottom: 6%;
-    width: 100%;
-    text-align: center;
-    font-family: 'Georgia', serif;
-    font-size: 26px;
-    font-style: italic;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-    letter-spacing: 1px;
-}
-
-/* ================= MESSAGE NOTE ================= */
-.message-section {
-    background: var(--panel-bg);
-    border: 1px solid var(--panel-border);
-    border-radius: 18px;
-    padding: 28px;
-    width: 100%;
-    line-height: 1.8;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 10px 25px rgba(53, 34, 58, 0.05);
-}
-
-.message-section p {
-    margin-bottom: 16px;
-    color: var(--text-dark);
-    font-size: 15px;
-}
-
-.message-section p:last-child {
-    margin-bottom: 0;
-}
-
-/* ================= MOBILE FIX ================= */
-@media (max-width: 768px) {
-    .luxury-card {
-        padding: 32px 24px;
-    }
-    .count-number {
-        font-size: 64px;
-    }
-    .poster-title {
-        font-size: 22px;
-    }
-    .bg-number-overlay {
-        font-size: 90px;
-    }
+/* SAME STYLE FOR BOTH */
+.sign .love,
+.sign .name{
+    font-size:22px;
+    letter-spacing:3px;
+    font-weight:bold;
+    color:#4A2E50;
+    font-family: inherit;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="bg-canvas"></canvas>
+<div id="bg"></div>
 
-<div class="screen" id="lockRoom">
-    <div class="gatekeeper-wrapper">
-        <div class="luxury-card">
-            <div class="gatekeeper-title">VERIFICATION REQUIRED</div>
-            <div class="gatekeeper-subtitle">Don't expect much… just something small from me.</div>
-            <input type="text" id="passcodeInput" class="passcode-input" placeholder="XXXX" maxlength="6">
-            <button class="unlock-btn" onclick="verifyKey()">UNLOCK</button>
-        </div>
+<!-- LOCK -->
+<div class="screen" id="lock">
+    <div class="box">
+        <h3 style="color:#6b3c7a;">VERIFICATION REQUIRED</h3>
+        <input id="code" maxlength="4" placeholder="XXXX">
+        <button onclick="check()">UNLOCK</button>
     </div>
 </div>
 
-<div class="countdown-overlay" id="countdownScreen">
-    <div class="count-number" id="countNumber">3</div>
-    <div class="count-text" id="countText"></div>
+<!-- COUNTDOWN -->
+<div id="countdown">
+    <div id="num">3</div>
+    <div id="txt"></div>
 </div>
 
-<div class="screen" id="mainContentRoom" style="display:none;">
-    <div class="main-content-wrapper">
-        
-        <div class="poster-container">
-            <div class="poster-bg-grid">
-                <img src="bday-pic3.jpg" class="grid-img" alt="Memory 1">
-                <img src="bday-pic4.jpg" class="grid-img" alt="Memory 2">
-                <img src="bday-pic2.jpg" class="grid-img" alt="Memory 3">
-                <img src="bday-pic3.jpg" class="grid-img" alt="Memory 4">
-            </div>
+<!-- MAIN -->
+<div id="main">
+    <div class="poster">
+        <img src="pic.png.jpeg">
+    </div>
+    <div id="tap">Tap for next →</div>
+</div>
 
-            <div class="bg-number-overlay">18</div>
+<!-- NOTE -->
+<div id="note">
 
-            <div class="poster-center-frame">
-                <img src="bday-pic1.jpg" class="center-img" alt="Birthday Girl">
-            </div>
+    <h1>Happy 18th Birthday</h1>
 
-            <div class="poster-title">Happy Birthday ✨</div>
-        </div>
+    <div class="noteBox">
 
-        <div class="message-section">
-            <p>Happy 18th Birthday, bestie 🤍🎉</p>
-            <p>Hope today feels really special for you in every way.</p>
-            <p>Wishing you lots of happiness, good health, success, and all the good things in life. Hope this year brings you more smiles, peace, and good moments.</p>
-            <p>And yeah… I really want to say thank you. Thank you for being part of my life and for all the memories. It means more to me than I usually show or say. I really value all those moments, and I’ll always be glad that you were part of them.</p>
-            <p>I just hope your day feels calm, happy, and filled with good moments from start to end.</p>
-            <p>Enjoy your day properly. Keep shining always ✨</p>
-            <p><b>With lots of love 🤍</b></p>
+        <p class="highlight">Happy 18th Birthday, Kavishkaa 🤍🎉</p>
+
+        <p>Hope today feels really special for you in every way.</p>
+        <p>Wishing you lots of happiness, good health, success, and all the good things in life.</p>
+        <p>Hope this year brings you more smiles, peace, and good moments.</p>
+        <p>And yeah… I really want to say thank you.</p>
+        <p>Thank you for being part of my life and all the memories.</p>
+        <p>I really value all those moments.</p>
+        <p>Keep shining always ✨</p>
+
+        <div class="sign">
+            <div class="love">WITH LOVE</div>
+            <div class="name">HIRUSHA</div>
         </div>
 
     </div>
 </div>
 
 <script>
-// --- CANVAS BACKGROUND ANIMATION ---
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
 
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+/* BACKGROUND */
+const bg=document.getElementById("bg");
 
-window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-});
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.4 - 0.2;
-        this.speedY = Math.random() * -0.4 - 0.1; 
-        this.opacity = Math.random() * 0.5 + 0.2;
-    }
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.y < 0) {
-            this.y = height;
-            this.x = Math.random() * width;
-        }
-        if (this.x < 0 || this.x > width) {
-            this.speedX *= -1;
-        }
-    }
-    draw() {
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
+for(let i=0;i<35;i++){
+    let d=document.createElement("div");
+    d.className="dot";
+    d.style.left=Math.random()*100+"vw";
+    d.style.top=Math.random()*100+"vh";
+    d.style.animationDuration=(5+Math.random()*10)+"s";
+    bg.appendChild(d);
 }
 
-const particles = Array.from({ length: 40 }, () => new Particle());
+/* INPUT FIX */
+const code=document.getElementById("code");
 
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animate);
-}
-animate();
-
-// --- LOGIC AND INTERACTION ---
-const input = document.getElementById("passcodeInput");
-
-input.addEventListener("input", () => {
-    input.value = input.value.toUpperCase().replace(/\s/g, "");
+code.addEventListener("input",()=>{
+    code.value=code.value.replace(/\s/g,'').toUpperCase().slice(0,4);
 });
 
-input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        verifyKey();
-    }
-});
-
-function verifyKey() {
-    if (input.value === "HK76") {
-        document.getElementById("lockRoom").style.display = "none";
-        startCountdown();
+/* CHECK */
+function check(){
+    if(code.value==="HK76"){
+        document.getElementById("lock").style.display="none";
+        start();
     } else {
-        input.value = "";
-        input.placeholder = "WRONG CODE";
-        setTimeout(() => { 
-            input.placeholder = "XXXX"; 
-        }, 1500);
+        code.value="";
     }
 }
 
-function startCountdown() {
-    const screen = document.getElementById("countdownScreen");
-    const num = document.getElementById("countNumber");
-    const text = document.getElementById("countText");
+/* COUNTDOWN */
+function start(){
 
-    const messages = {
-        3: "Loading something… hope it works 😄",
-        2: "Almost ready… wait for it…",
-        1: "This is for you 💜"
+    const screen=document.getElementById("countdown");
+    const num=document.getElementById("num");
+    const txt=document.getElementById("txt");
+
+    const msg={
+        3:"Loading something............ hope it works 😄",
+        2:"Almost ready… wait for it…",
+        1:"This is for you 🤍"
     };
 
-    screen.style.display = "flex";
-    let count = 3;
+    screen.style.display="flex";
 
-    function run() {
-        if (count > 0) {
-            num.textContent = count;
-            text.textContent = messages[count];
-            count--;
-            setTimeout(run, 1200);
-        } else {
-            screen.style.display = "none";
-            document.getElementById("mainContentRoom").style.display = "flex";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    const steps=[3,2,1];
+    let i=0;
+
+    function run(){
+
+        if(i>=steps.length){
+            screen.style.display="none";
+            document.getElementById("main").style.display="flex";
+
+            poppersBlast();
+            tap();
+            return;
         }
+
+        num.innerText=steps[i];
+        txt.innerText=msg[steps[i]];
+        i++;
+
+        setTimeout(run,1000);
     }
+
     run();
 }
+
+/* POPPERS */
+function poppersBlast(){
+
+    const layer=document.createElement("div");
+    layer.style.position="fixed";
+    layer.style.inset="0";
+    layer.style.pointerEvents="none";
+    layer.style.zIndex="9999";
+    document.body.appendChild(layer);
+
+    const colors=["#fff","#ffd6ff","#caffbf","#a0c4ff","#ffe66d","#ff4d6d","#bdb2ff"];
+
+    const x=window.innerWidth/2;
+    const y=window.innerHeight/3;
+
+    for(let i=0;i<180;i++){
+
+        const p=document.createElement("div");
+        const size=Math.random()*6+3;
+
+        p.style.position="absolute";
+        p.style.width=size+"px";
+        p.style.height=size+"px";
+        p.style.borderRadius="50%";
+        p.style.background=colors[Math.floor(Math.random()*colors.length)];
+        p.style.left=x+"px";
+        p.style.top=y+"px";
+        p.style.boxShadow="0 0 10px rgba(255,255,255,0.9)";
+
+        layer.appendChild(p);
+
+        const angle=Math.random()*Math.PI*2;
+        const distance=Math.random()*500;
+
+        const dx=Math.cos(angle)*distance;
+        const dy=Math.sin(angle)*distance;
+
+        setTimeout(()=>{
+            p.style.transition="1.3s ease-out";
+            p.style.transform=`translate(${dx}px,${dy}px) scale(0)`;
+            p.style.opacity="0";
+        },10);
+
+        setTimeout(()=>p.remove(),1500);
+    }
+
+    setTimeout(()=>layer.remove(),1600);
+}
+
+/* TAP */
+function tap(){
+    setTimeout(()=>{
+        let t=document.getElementById("tap");
+        t.style.opacity=1;
+
+        t.onclick=()=>{
+            document.getElementById("main").style.display="none";
+            document.getElementById("note").style.display="flex";
+        };
+    },1500);
+}
+
 </script>
 
 </body>
