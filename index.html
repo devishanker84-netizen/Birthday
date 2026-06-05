@@ -3,199 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 18th Birthday Kavishkaa</title>
+    <title>Animated Birthday Cake</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* ==================================================
+           1. GENERAL LAYOUT STYLING
+           ================================================== */
         body {
+            background-color: #E29099; /* Warm screenshot pink */
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            /* Sunset beach gradient background inspired by your reference images */
-            background: linear-gradient(180deg, #fcdbb0 0%, #f7b083 40%, #e07b66 70%, #b85c6c 100%);
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            padding: 15px;
-            position: relative;
-        }
-
-        /* Ambient glowing sunset sun effect behind the content */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(255,243,212,0.6) 0%, rgba(255,255,255,0) 70%);
-            top: 15%;
-            z-index: 0;
-        }
-
-        /* Container card with a soft frosted-glass overlay to let the sunset show through */
-        .poster-card {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 500px; /* Kept compact so it frames beautifully on a mobile screen */
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
-            padding: 30px 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-items: center;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        /* Image styling matching the full-body template look */
-        .image-column {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .image-container {
-            width: 100%;
-            max-width: 320px;
-            border-radius: 16px;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-            background: #fff;
-            padding: 6px; /* White border frame feel */
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        /* Typography & Wishes matching the color scheme of your pictures */
-        .wishes-column {
+        .cake-container {
+            position: relative;
+            width: 300px;
+            height: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
+            justify-content: center;
+            cursor: pointer;
         }
 
-        .main-heading {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
-            color: #9e1b6b; /* Magenta/Burgundy tone from image_4f30de.jpg */
-            line-height: 1;
-            margin-bottom: 2px;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+        svg#cake {
+            width: 200px;
+            height: 500px;
         }
 
-        .sub-heading {
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: #b3893b; /* Luxury gold color from text headings */
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+        /* ==================================================
+           2. STEP-BY-STEP LAYER DROPPING ANIMATIONS
+           ================================================== */
+        .layer, .anim-plate, .anim-candle {
+            opacity: 0;
+            animation: fallDown 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        .stanza-text {
-            font-size: 0.95rem;
-            line-height: 1.65;
-            font-weight: 400;
-            color: #4a3e3d;
-            margin-bottom: 20px;
-            padding: 0 5px;
+        /* Base Plate lands first */
+        .anim-plate {
+            animation-delay: 0.2s;
         }
 
-        .divider {
-            width: 80px;
-            height: 1.5px;
-            background: linear-gradient(90deg, transparent, #b3893b, transparent);
-            margin-bottom: 15px;
+        /* Bottom Biscuit Layer */
+        .bottom-layer {
+            animation-delay: 0.6s;
         }
 
-        .fixed-closing {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.4rem;
-            color: #9e1b6b;
+        /* Cream Layer 1 */
+        .middle-cream-1 {
+            animation-delay: 0.9s;
         }
 
-        /* CSS Floating Confetti Effect elements */
-        .confetti {
+        /* Middle Biscuit Layer */
+        .middle-layer {
+            animation-delay: 1.2s;
+        }
+
+        /* Cream Layer 2 */
+        .middle-cream-2 {
+            animation-delay: 1.5s;
+        }
+
+        /* Top Biscuit Layer */
+        .top-layer {
+            animation-delay: 1.8s;
+        }
+
+        @keyframes fallDown {
+            0% {
+                transform: translateY(-200px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ==================================================
+           3. LIQUID FROSTING DRIP ANIMATION
+           ================================================== */
+        .liquid-frosting {
+            opacity: 0;
+            transform-origin: top center;
+            /* Specialized curve to make the frosting stretch down heavily like thick cream */
+            animation: liquidDrip 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 2.3s;
+        }
+
+        @keyframes liquidDrip {
+            0% {
+                opacity: 0;
+                transform: scaleY(0.1);
+            }
+            30% {
+                opacity: 1;
+                transform: scaleY(0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scaleY(1); /* Stretches completely down into the original shape */
+            }
+        }
+
+        /* ==================================================
+           4. CANDLE & FLICKERING FLAME
+           ================================================== */
+        .anim-candle {
+            animation-delay: 4.1s; /* Lands right after frosting settles */
+        }
+
+        .velas {
             position: absolute;
-            width: 8px;
-            height: 14px;
-            background: #ffd700;
-            opacity: 0.7;
-            border-radius: 2px;
-            z-index: 0;
-            animation: fall 6s linear infinite;
-        }
-        
-        .c1 { left: 10%; animation-delay: 0s; transform: rotate(15deg); background: #fca1b0; }
-        .c2 { left: 25%; animation-delay: 2s; transform: rotate(45deg); background: #ffd700; }
-        .c3 { left: 75%; animation-delay: 1s; transform: rotate(-30deg); background: #e6cb95; }
-        .c4 { left: 88%; animation-delay: 3.5s; transform: rotate(20deg); background: #fca1b0; }
-
-        @keyframes fall {
-            0% { top: -20px; transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { top: 100vh; transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            top: 155px;
+            width: 20px;
+            height: 35px;
+            opacity: 0;
+            transform: scale(0);
+            animation: ignite 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 4.7s; /* Snaps on as soon as candle body hits the cake */
         }
 
-        /* Optimization for very narrow vertical phone devices */
-        @media (max-width: 380px) {
-            .main-heading { font-size: 3.3rem; }
-            .sub-heading { font-size: 1.8rem; }
-            .poster-card { padding: 20px 15px; }
+        @keyframes ignite {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .fuego {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 24px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: linear-gradient(to bottom, #FFFFFF, #FFEFA0, #FFAE34);
+            opacity: 0.9;
+            filter: drop-shadow(0 0 10px rgba(255, 239, 160, 0.6));
+            animation: flicker 0.12s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+        }
+
+        /* Flame layers for depth */
+        .fuego:nth-child(2) { width: 10px; height: 20px; opacity: 0.8; animation-delay: 0.03s; }
+        .fuego:nth-child(3) { width: 8px; height: 16px; opacity: 0.9; animation-delay: 0.07s; }
+        .fuego:nth-child(4) { width: 6px; height: 12px; opacity: 0.7; animation-delay: 0.1s; }
+        .fuego:nth-child(5) { width: 4px; height: 8px; opacity: 0.9; animation-delay: 0.12s; }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(0.96) rotate(-1deg); }
+            100% { transform: translateX(-50%) scale(1.04) rotate(1deg); }
+        }
+
+        /* ==================================================
+           5. TYPOGRAPHY
+           ================================================== */
+        .text-container {
+            position: absolute;
+            bottom: 80px;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInText 1s ease forwards;
+            animation-delay: 5.2s;
+        }
+
+        .happy {
+            font-size: 32px;
+            font-weight: 300;
+            font-style: italic;
+            color: #835C54;
+            margin: 0;
+        }
+
+        .name {
+            font-size: 20px;
+            font-weight: 300;
+            font-style: italic;
+            color: #926960;
+            margin: 8px 0 0 0;
+        }
+
+        @keyframes fadeInText {
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Confetti Background Pieces -->
-    <div class="confetti c1"></div>
-    <div class="confetti c2"></div>
-    <div class="confetti c3"></div>
-    <div class="confetti c4"></div>
-
-    <div class="poster-card">
-        
-        <!-- Image positioned at the top for mobile layout screens -->
-        <div class="image-column">
-            <div class="image-container">
-                <img src="photo.png.png" alt="Kavishkaa Photo">
-            </div>
-        </div>
-        
-        <!-- Elegant typography section -->
-        <div class="wishes-column">
-            <h1 class="main-heading">Happy Birthday</h1>
-            <h2 class="sub-heading">Kavishkaa</h2>
-            
-            <p class="stanza-text">
-                Wishing you a truly magical day, with the love and joy you so deeply deserve. 
-                As you step into adulthood, may every chapter you write be more beautiful than the last, 
-                filled of cherished memories and blessings blessings.
-            </p>
-            
-            <div class="divider"></div>
-            
-            <p class="fixed-closing">Shine bright, always! ♡</p>
+    <div class="cake-container">
+        <div class="velas">
+            <div class="fuego"></div>
+            <div class="fuego"></div>
+            <div class="fuego"></div>
+            <div class="fuego"></div>
+            <div class="fuego"></div>
         </div>
 
+        <svg id="cake" version="1.1" viewBox="0 0 200 500">
+            <g class="anim-candle">
+                <rect x="98" y="175" width="4" height="10" fill="#6C5242" />
+                <rect x="94" y="185" width="12" height="40" fill="#FFFFFF" rx="2" />
+                <line x1="94" y1="200" x2="106" y2="200" stroke="#E29099" stroke-width="2" />
+                <line x1="94" y1="212" x2="106" y2="212" stroke="#E29099" stroke-width="2" />
+            </g>
+
+            <path class="anim-plate" d="M 20 345 L 180 345" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+
+            <g id="cake-layers">
+                <path class="layer bottom-layer" fill="#A57F71" d="M30,310 v25 c0,5 5,10 10,10 h120 c5,0 10,-5 10,-10 v-25 z" />
+                
+                <rect class="layer middle-cream-1" x="30" y="298" width="140" height="12" fill="#7D5C51" />
+                
+                <rect class="layer middle-layer" x="30" y="268" width="140" height="30" fill="#A57F71" />
+                
+                <rect class="layer middle-cream-2" x="30" y="256" width="140" height="12" fill="#7D5C51" />
+                
+                <rect class="layer top-layer" x="30" y="231" width="140" height="25" fill="#A57F71" />
+
+                <path class="liquid-frosting" fill="#FFFFFF" d="M30,231 v15 
+                    c 5,15 10,15 15,0 
+                    c 5,-10 5,25 15,25 
+                    c 10,0 10,-30 15,-30 
+                    c 5,0 5,15 10,15 
+                    c 5,0 5,-15 10,-15 
+                    c 5,0 5,20 15,20 
+                    c 10,0 10,-20 15,-20 
+                    c 5,0 5,10 10,10 
+                    c 5,0 10,-10 10,-15 
+                    v -20 c 0,-5 -5,-10 -10,-10 H 40 c -5,0 -10,5 -10,10 z" />
+            </g>
+        </svg>
+
+        <div class="text-container">
+            <h1 class="happy">happy birthday!</h1>
+            <p class="name">Jonas</p>
+        </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.querySelector('.cake-container');
+            
+            // On mobile devices, simply tap the screen at any point to rerun the build animation!
+            container.addEventListener('click', () => {
+                container.style.display = 'none';
+                void container.offsetHeight; // Forces browser redraw
+                container.style.display = 'flex';
+            });
+        });
+    </script>
 </body>
 </html>
