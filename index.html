@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Birthday Capsule</title>
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     font-family: Arial;
     background:#d1c7d7;
     overflow:hidden;
+    height:100dvh;
 }
 
-/* BACKGROUND FLOATERS */
+/* BACKGROUND */
 #bg{
     position:fixed;
     inset:0;
@@ -21,6 +26,7 @@ body{
     pointer-events:none;
 }
 
+/* FLOATERS */
 .dot{
     position:absolute;
     width:4px;
@@ -39,7 +45,7 @@ body{
 .screen{
     position:relative;
     z-index:2;
-    height:100vh;
+    height:100dvh;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -48,12 +54,13 @@ body{
 
 /* LOCK */
 .box{
-    width:90%;
-    max-width:400px;
+    width:92%;
+    max-width:380px;
     background:rgba(255,255,255,0.4);
-    padding:25px;
+    padding:22px;
     border-radius:15px;
     text-align:center;
+    backdrop-filter: blur(8px);
 }
 
 input{
@@ -63,6 +70,9 @@ input{
     text-align:center;
     letter-spacing:5px;
     text-transform:uppercase;
+    border: none;
+    border-radius:10px;
+    outline:none;
 }
 
 button{
@@ -73,6 +83,7 @@ button{
     color:white;
     border:none;
     border-radius:10px;
+    font-size:16px;
 }
 
 /* COUNTDOWN */
@@ -85,10 +96,11 @@ button{
     align-items:center;
     background:#d1c7d7;
     z-index:5;
+    padding:20px;
 }
 
 #num{
-    font-size:70px;
+    font-size:72px;
     color:#4A2E50;
 }
 
@@ -96,12 +108,13 @@ button{
     margin-top:10px;
     font-size:14px;
     text-align:center;
+    padding:0 20px;
 }
 
 /* MAIN */
 #main{
     display:none;
-    height:100vh;
+    height:100dvh;
     flex-direction:column;
     justify-content:center;
     align-items:center;
@@ -109,8 +122,8 @@ button{
 }
 
 .poster{
-    width:85%;
-    max-width:350px;
+    width:90%;
+    max-width:340px;
     height:420px;
     border-radius:15px;
     overflow:hidden;
@@ -126,9 +139,15 @@ button{
     opacity:0;
     font-weight:bold;
     color:#4A2E50;
+    animation: fadeIn 1s forwards;
 }
 
-/* NOTE SCREEN */
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* NOTE */
 #note{
     display:none;
     position:fixed;
@@ -136,15 +155,15 @@ button{
     background:#d1c7d7;
     flex-direction:column;
     padding:15px;
+    height:100dvh;
 }
 
-/* TITLE */
 h1{
     text-align:center;
     color:#5a2c6b;
+    font-size:20px;
 }
 
-/* SCROLL AREA */
 .noteBox{
     flex:1;
     overflow-y:auto;
@@ -152,35 +171,38 @@ h1{
     padding:15px;
     border-radius:12px;
     line-height:1.7;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* HIGHLIGHT */
 .highlight{
-    font-size:20px;
+    font-size:18px;
     font-weight:700;
     text-align:center;
     color:#4A2E50;
     background:rgba(255,255,255,0.6);
     padding:12px;
     border-radius:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
 
-/* FINAL SIGN */
+/* SIGN */
 .sign{
-    margin-top:50px;
+    margin-top:40px;
     text-align:center;
-    padding-bottom:20px;
 }
 
-/* SAME STYLE FOR BOTH */
 .sign .love,
 .sign .name{
-    font-size:22px;
-    letter-spacing:3px;
+    font-size:20px;
     font-weight:bold;
     color:#4A2E50;
-    font-family: inherit;
+    letter-spacing:2px;
+}
+
+/* SAFE AREA FIX (iPhones) */
+.screen, #note, #main, #countdown {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
 }
 </style>
 </head>
@@ -221,13 +243,10 @@ h1{
 
         <p class="highlight">Happy 18th Birthday, Kavishkaa 🤍🎉</p>
 
-        <p>Hope today feels really special for you in every way.</p>
-        <p>Wishing you lots of happiness, good health, success, and all the good things in life.</p>
-        <p>Hope this year brings you more smiles, peace, and good moments.</p>
-        <p>And yeah… I really want to say thank you.</p>
-        <p>Thank you for being part of my life and all the memories.</p>
-        <p>I really value all those moments.</p>
-        <p>Keep shining always ✨</p>
+        <p>Hope today feels really special for you in everyway.</p>
+        <p>Wishing you happiness, good health, success and all the good things in life. Hope this year brings you more smiles, peace, and good moments.</p>
+        <p>And yeah... I really want to say Thank you for being part of my life and for all the memories. It means more to me than i usually show or say.I really value all those moments, and I'll always be glad that you were part of it.</p><p>I just hope your day feels calm, happy, and filled with good moments from start to end.</p>
+        <p>Enjoy your day.Keep shining always ✨</p>
 
         <div class="sign">
             <div class="love">WITH LOVE</div>
@@ -239,7 +258,7 @@ h1{
 
 <script>
 
-/* BACKGROUND */
+/* BG FLOATERS */
 const bg=document.getElementById("bg");
 
 for(let i=0;i<35;i++){
@@ -287,11 +306,9 @@ function start(){
     let i=0;
 
     function run(){
-
         if(i>=steps.length){
             screen.style.display="none";
             document.getElementById("main").style.display="flex";
-
             poppersBlast();
             tap();
             return;
@@ -334,7 +351,6 @@ function poppersBlast(){
         p.style.background=colors[Math.floor(Math.random()*colors.length)];
         p.style.left=x+"px";
         p.style.top=y+"px";
-        p.style.boxShadow="0 0 10px rgba(255,255,255,0.9)";
 
         layer.appendChild(p);
 
