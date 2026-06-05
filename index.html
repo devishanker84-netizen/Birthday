@@ -26,6 +26,7 @@ body{
     pointer-events:none;
 }
 
+/* FLOATERS */
 .dot{
     position:absolute;
     width:4px;
@@ -140,7 +141,7 @@ button{
     color:#4A2E50;
 }
 
-/* NOTE */
+/* NOTE SCREEN */
 #note{
     display:none;
     position:fixed;
@@ -151,18 +152,21 @@ button{
     height:100dvh;
 }
 
-/* ⭐ BIG TITLE FIX */
+/* 🔥 RESPONSIVE BIG TITLE FIX */
 .bigTitle{
     text-align:center;
-    font-size:38px;
     font-weight:900;
     color:#4A2E50;
-    font-family: 'Georgia', serif;
+    font-family:'Georgia', serif;
     letter-spacing:2px;
     margin-bottom:10px;
     text-shadow:0 5px 15px rgba(0,0,0,0.2);
+
+    /* MOBILE PERFECT SIZE */
+    font-size: clamp(34px, 9vw, 70px);
 }
 
+/* NOTE BOX */
 .noteBox{
     flex:1;
     overflow-y:auto;
@@ -241,7 +245,6 @@ button{
         <p>And yeah... I really want to say Thank you for being part of my life and for all the memories. It means more to me than i usually show or say.I really value all those moments, and I'll always be glad that you were part of it.</p><p>I just hope your day feels calm, happy, and filled with good moments from start to end.</p>
         <p>Enjoy your day.Keep shining always ✨</p>
 
-
         <div class="sign">
             <div class="love">WITH LOVE</div>
             <div class="name">HIRUSHA</div>
@@ -319,7 +322,7 @@ function start(){
     run();
 }
 
-/* 💥 BIG POPPERS */
+/* POPPERS */
 function poppersBlast(){
 
     const layer=document.createElement("div");
